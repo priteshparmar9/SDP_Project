@@ -254,6 +254,6 @@ class _SignUpState extends State<SignUp> {
 
     final json = user.toJson();
     await fbcol.set(json);
-
+    Navigator.pushNamed(context, '/login');
   }
 }

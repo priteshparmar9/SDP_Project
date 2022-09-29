@@ -70,6 +70,7 @@ class StateWidget extends State<MyStatefulWidget>{
             Padding(
               padding: EdgeInsets.fromLTRB(w*0.06, h*0.01, w*0.06, h*0.01),
               child: TextField(
+                controller: nameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -90,9 +91,8 @@ class StateWidget extends State<MyStatefulWidget>{
             Padding(
               padding: EdgeInsets.fromLTRB(w*0.06, h*0.01, w*0.06, h*0.01),
               child: TextField(
+                controller: passwordController,
                 decoration: InputDecoration(
-
-
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -117,7 +117,9 @@ class StateWidget extends State<MyStatefulWidget>{
             ),
             Center(
               child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+
+                  },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(30,15,30,15),
                     child: Text("Login",
