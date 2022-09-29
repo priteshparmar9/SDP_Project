@@ -249,11 +249,15 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future createUser(String username, String password, String number, String email) async{
+    email = email.toString().trim();
+    password = password.toString().trim();
     final fbcol = FirebaseFirestore.instance.collection("users").doc();
     final user = User(int.parse(number), username, password, email);
 
     final json = user.toJson();
     await fbcol.set(json);
+    AuthController authController = new AuthController();
+    authController.Register(email, password);
     Navigator.pushNamed(context, '/login');
   }
 }

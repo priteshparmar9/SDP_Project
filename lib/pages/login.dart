@@ -1,3 +1,4 @@
+import 'package:sdp_project/controllers/auth_controller.dart';
 import 'package:sdp_project/pages/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class MyStatefulWidget extends StatefulWidget{
 }
 
 class StateWidget extends State<MyStatefulWidget>{
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
 
@@ -70,7 +71,7 @@ class StateWidget extends State<MyStatefulWidget>{
             Padding(
               padding: EdgeInsets.fromLTRB(w*0.06, h*0.01, w*0.06, h*0.01),
               child: TextField(
-                controller: nameController,
+                controller: emailController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -81,7 +82,7 @@ class StateWidget extends State<MyStatefulWidget>{
                     ),
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  labelText: "Username",
+                  labelText: "Email",
                   labelStyle: TextStyle(
                     fontSize: 18,
                   ),
@@ -118,7 +119,12 @@ class StateWidget extends State<MyStatefulWidget>{
             Center(
               child: ElevatedButton(
                   onPressed: (){
-
+                    String email = emailController.text.toString().trim();
+                    String password = passwordController.text.toString().trim();
+                    print("Email:  " + email +  " Password : " + password);
+                    AuthController auth = new AuthController();
+                    auth.SignIn(email, password);
+                    Navigator.pushNamed(context, "/signup");
                   },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(30,15,30,15),
