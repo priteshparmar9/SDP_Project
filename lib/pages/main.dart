@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
         "Vistara", "VS | 654", "Available", 5500),
   ];
 
-  Widget ticketTemplate(ticket,w,h){
+  Widget ticketTemplate(ticket, w, h) {
     return Card(
       margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
       shape: RoundedRectangleBorder(
@@ -33,9 +33,11 @@ class _MainPageState extends State<MainPage> {
             children: [
               Column(
                 children: [
-                  Image(image: AssetImage('assets/images/' + ticket.company+ '.png'),
-                    height: h*0.15,
-                    width: w*0.25,
+                  Image(
+                    image:
+                        AssetImage('assets/images/' + ticket.company + '.png'),
+                    height: h * 0.15,
+                    width: w * 0.25,
                   )
                 ],
               ),
@@ -45,16 +47,41 @@ class _MainPageState extends State<MainPage> {
               ),
               Column(
                 children: [
-                  Text(
-                    "Source: " + ticket.source,
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 20,
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Text(
+                          ticket.source,
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 30,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_right_alt,
+                          size: 40,
+                          // color: Colors,
+                        ),
+                        Text(
+                          ticket.destination,
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 30,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    "Destination: " + ticket.destination,
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black,
                   ),
+                  Text(
+                      "Price: " + ticket.base_price.toString() + " ₹",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                  )
                 ],
               ),
             ],
@@ -63,6 +90,7 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -74,8 +102,8 @@ class _MainPageState extends State<MainPage> {
       body: Column(
         children: [
           Column(
-            children:
-                t.map((e) => ticketTemplate(e,w,h)).toList(),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: t.map((e) => ticketTemplate(e, w, h)).toList(),
           ),
           Spacer(),
           Column(
