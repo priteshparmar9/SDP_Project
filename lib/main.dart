@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:sdp_project/controllers/auth_controller.dart';
 import 'package:sdp_project/pages/loading.dart';
 import 'package:sdp_project/pages/login.dart';
+import 'package:sdp_project/pages/main.dart';
 import 'package:sdp_project/pages/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,12 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
       // home:MyApp(),
-    initialRoute: '/loading',
+    initialRoute: '/mainPage',
     routes: {
         '/loading':(context)=>Loading(),
         '/login': (context)=>Login(),
         '/signup': (context)=>SignUp(),
+        '/mainPage': (context)=>MainPage(),
     },
   ));
 }

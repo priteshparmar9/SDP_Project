@@ -122,9 +122,17 @@ class StateWidget extends State<MyStatefulWidget>{
                     String email = emailController.text.toString().trim();
                     String password = passwordController.text.toString().trim();
                     print("Email:  " + email +  " Password : " + password);
-                    AuthController auth = new AuthController();
-                    auth.SignIn(email, password);
-                    Navigator.pushNamed(context, "/signup");
+                    try{
+                      AuthController.instance.SignIn(email, password);
+                      Navigator.pushNamed(context, "/mainPage");
+                    }
+                    catch(Exception){
+                      AlertDialog(
+                        title: Text('Invalid Credentials'),
+                      );
+                    }
+
+                    // Navigator.pushNamed(context, "/signup");
                   },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(30,15,30,15),
