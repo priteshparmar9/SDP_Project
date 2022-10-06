@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sdp_project/controllers/auth_controller.dart';
 import 'package:sdp_project/pages/signup.dart';
 import 'package:flutter/gestures.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 
 
 class Login extends StatelessWidget {
+
+
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
@@ -26,9 +29,10 @@ class MyStatefulWidget extends StatefulWidget{
 }
 
 class StateWidget extends State<MyStatefulWidget>{
+
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
 
   Widget build(BuildContext context){
     double w = MediaQuery.of(context).size.width;
@@ -124,6 +128,7 @@ class StateWidget extends State<MyStatefulWidget>{
                     print("Email:  " + email +  " Password : " + password);
                     try{
                       AuthController.instance.SignIn(email, password);
+                      Navigator.pushNamed(context, "/loading");
                       Navigator.pushNamed(context, "/mainPage");
                     }
                     catch(Exception){
@@ -189,3 +194,4 @@ class StateWidget extends State<MyStatefulWidget>{
     );
   }
 }
+

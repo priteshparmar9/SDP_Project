@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage> {
                     color: Colors.black,
                   ),
                   Text(
-                      "Price: " + ticket.base_price.toString() + " ₹",
+                      "Price: ₹"+ ticket.base_price.toString(),
                       style: TextStyle(
                         fontSize: 20,
                       ),
