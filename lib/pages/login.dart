@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sdp_project/controllers/auth_controller.dart';
 import 'package:sdp_project/pages/signup.dart';
@@ -126,8 +127,26 @@ class StateWidget extends State<MyStatefulWidget>{
                     String email = emailController.text.toString().trim();
                     String password = passwordController.text.toString().trim();
                     print("Email:  " + email +  " Password : " + password);
+                    bool flag = false;
                     try{
-                      AuthController.instance.SignIn(email, password);
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .get()
+                          .then((QuerySnapshot querySnapshot) {
+                        querySnapshot.docs.forEach((doc) {
+                          // print( "Username : " + doc["username"]);
+                          if(doc["email"] == email && doc["password"] == password){
+                            flag = true;
+                            if(!flag){
+                              setUsername(email);
+                            }
+                            print("Login Successful!!");
+                            Navigator.pushNamed(context, "/loading");
+                          }
+                        });
+
+                      });
+
                       Navigator.pushNamed(context, "/loading");
                       Navigator.pushNamed(context, "/mainPage");
                     }
@@ -162,6 +181,7 @@ class StateWidget extends State<MyStatefulWidget>{
                 Center(
                   child: GestureDetector(
                     onTap: (){
+                      Navigator.pushNamed(context, '/mainPage');
                       Navigator.pushNamed(context, '/signup');
                     },
                     child: RichText(
@@ -188,10 +208,20 @@ class StateWidget extends State<MyStatefulWidget>{
               ],
             ),
           ],
-          
         ),
       ),
     );
   }
 }
 
+void loginCred() async{
+  final storage = new FlutterSecureStorage();
+  dynamic value = await storage.read(key : "username");
+  print(value);
+}
+
+void setUsername(String username) async{
+  final storage = new FlutterSecureStorage();
+  await storage.write(key: "username", value: username);
+  return;
+}

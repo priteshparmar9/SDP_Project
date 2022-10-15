@@ -256,12 +256,7 @@ class _SignUpState extends State<SignUp> {
 
     final json = user.toJson();
     await fbcol.set(json);
-    try{
-      AuthController.instance.Register(email, password);
-    }
-    catch(Exception){
-      print("Error occured");
-    }
+
     Navigator.pushNamed(context, '/login');
   }
 }

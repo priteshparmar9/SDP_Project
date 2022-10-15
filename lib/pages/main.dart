@@ -13,7 +13,7 @@ class _MainPageState extends State<MainPage> {
   List<Ticket> t = [
     Ticket("Rajkot", "Mumbai", DateTime.parse("2022-10-11"), 2.5, 125, 125,
         "Air India", "AI | 656", "Available", 5500),
-    Ticket("Ahmedabad", "Goa", DateTime.parse("2022-10-12"), 2.5, 125, 125,
+    Ticket("Rajkot", "Goa", DateTime.parse("2022-10-12"), 2.5, 125, 125,
         "Air India", "AI | 646", "Available", 3500),
     Ticket("Delhi", "Chennai", DateTime.parse("2022-10-11"), 2.5, 125, 125,
         "Vistara", "VS | 654", "Available", 5500),
@@ -151,6 +151,20 @@ class _MainPageState extends State<MainPage> {
                                     },
                                     child: Icon(
                                       Icons.add_chart,
+                                      size: w * 0.09,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, "/addFlight");
+                                    },
+                                    child: Icon(
+                                      Icons.add_box,
                                       size: w * 0.09,
                                       color: Colors.black,
                                     ),

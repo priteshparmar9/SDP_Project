@@ -35,8 +35,9 @@ dependencies:
   firebase_auth: ^3.11.0
   firebase_core: ^1.23.0
   firebase_database: ^9.1.5
-  cloud_firestore_odm: ^1.0.0-dev.31
+  cloud_firestore: ^3.1.4
   flutter_secure_storage: ^5.0.2
+  cool_dropdown: ^1.4.2
 
 
 
