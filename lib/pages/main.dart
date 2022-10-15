@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sdp_project/models/tickets.dart';
 
 class MainPage extends StatefulWidget {
@@ -157,6 +158,7 @@ class _MainPageState extends State<MainPage> {
                                   )
                                 ],
                               ),
+                              (loginCred() == "admin")?Text(''):
                               Column(
                                 children: [
                                   GestureDetector(
@@ -186,4 +188,13 @@ class _MainPageState extends State<MainPage> {
       // bottomNavigationBar:
     );
   }
+}
+
+
+Future<String> loginCred() async{
+  final storage = new FlutterSecureStorage();
+  String value =  storage.read(key : "username").toString();
+  print("Username : " + value);
+  return value;
+
 }

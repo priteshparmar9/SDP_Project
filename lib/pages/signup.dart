@@ -24,6 +24,14 @@ class _SignUpState extends State<SignUp> {
 
     double w = MediaQuery.of(context).size.width;
     double h =  MediaQuery.of(context).size.height;
+    var _text = '';
+    bool error_occured = false;
+
+    void validateName(String name){
+      if(name.length < 3 )error_occured = true;
+      else error_occured = false;
+    }
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
@@ -36,20 +44,6 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(height: h*0.03,),
-            /*
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width*0.8,
-                height: MediaQuery.of(context).size.height*0.25,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/loginpage.gif'),
-                    )
-                ),
-              ),
-            ),
-
-        */
             Padding(
               padding: EdgeInsets.fromLTRB(w*0.06, h*0.01, w*0.06, h*0.01),
               child: Container(
@@ -72,7 +66,9 @@ class _SignUpState extends State<SignUp> {
               padding: EdgeInsets.fromLTRB(w*0.06, h*0.01, w*0.06, h*0.01),
               child: TextField(
                 controller: nameController,
+                onChanged: (text) => validateName(nameController.text),
                 decoration: InputDecoration(
+                  errorText: (error_occured)?'':"Error Occured",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),

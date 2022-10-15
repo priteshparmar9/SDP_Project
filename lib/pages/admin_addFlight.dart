@@ -30,6 +30,8 @@ class StateFulAddFlight extends StatefulWidget {
 }
 
 class _StateFulAddFlightState extends State<StateFulAddFlight> {
+  TextEditingController dateCtl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -73,110 +75,226 @@ class _StateFulAddFlightState extends State<StateFulAddFlight> {
     ];
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                "Add Flight",
-                style: TextStyle(
-                  fontSize: w * 0.075,
-                ),
-              ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(0, 0, 255, 1),
-                    ),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  labelText: "Source",
-                  labelStyle: TextStyle(
-                    fontSize: 18,
+      body: Container(
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     fit: BoxFit.fill,
+        //     image: AssetImage("assets/images/background.jpeg"),
+        //   )
+        // ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  "Add Flight",
+                  style: TextStyle(
+                    fontSize: w * 0.075,
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(0, 0, 255, 1),
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  labelText: "Destination",
-                  labelStyle: TextStyle(
-                    fontSize: 18,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(0, 0, 255, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    labelText: "Source",
+                    labelStyle: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
-              child: Row(
-                children: [
-                  Text(
-                    "Company: ",
-                    style: TextStyle(
-                      fontSize: 20,
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(0, 0, 255, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    labelText: "Destination",
+                    labelStyle: TextStyle(
+                      fontSize: 18,
                     ),
                   ),
-                  CoolDropdown(
-                    dropdownList: dropdownItemList,
-                    onChange: (_) {},
-                    defaultValue: dropdownItemList[3],
-                    dropdownHeight: h * 0.3,
-                    // placeholder: 'insert...',
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      "Company: ",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    CoolDropdown(
+                      dropdownList: dropdownItemList,
+                      onChange: (_) {},
+                      defaultValue: dropdownItemList[3],
+                      dropdownHeight: h * 0.33,
+                      dropdownItemHeight: h * 0.07,
+                      // placeholder: 'insert...',
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(0, 0, 255, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    labelText: "Flight ID",
+                    labelStyle: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Image(image: AssetImage("assets/images/Gif1.gif"),
+                    //   width: 1*w,
+                    // ),
+                    Column(
+                      children: [
+                        Text(
+                          "Economy class",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: w * 0.42,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Seats",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: w * 0.42,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Price",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        )
+                        // Field
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Business Class",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: w * 0.42,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Seats",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: w * 0.42,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Price",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      w * 0.06, h * 0.01, w * 0.06, h * 0.01),
+                  child: TextFormField(
+                    controller: dateCtl,
+                    decoration: InputDecoration(
+                      labelText: "Date of flight",
+                      border: OutlineInputBorder(),
+                    ),
+                    onTap: () async {
+                      DateTime? date = DateTime(1900);
+                      FocusScope.of(context).requestFocus(new FocusNode());
+
+                      date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100));
+
+                      dateCtl.text = date.toString();
+                    },
                   )
-                ],
-              ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.fromLTRB(w * 0.06, h * 0.01, w * 0.06, h * 0.01),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(0, 0, 255, 1),
-                    ),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  labelText: "Flight ID",
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                // Image(image: AssetImage("assets/images/Gif1.gif"),
-                //   width: 1*w,
-                // ),
-              ],
-            )
-          ],
+                  // child:showTimePicker(context: context, initialTime: DateTime(2022,10,12,0,0,0,0,0,0))
+                  )
+            ],
+          ),
         ),
       ),
     );

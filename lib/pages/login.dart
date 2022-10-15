@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sdp_project/controllers/auth_controller.dart';
+import 'package:sdp_project/main.dart';
 import 'package:sdp_project/pages/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class StateWidget extends State<MyStatefulWidget>{
                     ),
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  labelText: "Email",
+                  labelText: "Username/Email",
                   labelStyle: TextStyle(
                     fontSize: 18,
                   ),
@@ -135,9 +136,9 @@ class StateWidget extends State<MyStatefulWidget>{
                           .then((QuerySnapshot querySnapshot) {
                         querySnapshot.docs.forEach((doc) {
                           // print( "Username : " + doc["username"]);
-                          if(doc["email"] == email && doc["password"] == password){
-                            flag = true;
+                          if((doc["email"] == email || doc["username"] == email)&& doc["password"] == password){
                             if(!flag){
+                              flag = true;
                               setUsername(email);
                             }
                             print("Login Successful!!");
@@ -147,7 +148,6 @@ class StateWidget extends State<MyStatefulWidget>{
 
                       });
 
-                      Navigator.pushNamed(context, "/loading");
                       Navigator.pushNamed(context, "/mainPage");
                     }
                     catch(Exception){
@@ -221,7 +221,12 @@ void loginCred() async{
 }
 
 void setUsername(String username) async{
+  print("Username is set!!!");
+
   final storage = new FlutterSecureStorage();
   await storage.write(key: "username", value: username);
+
+
+  loginCred();
   return;
 }

@@ -19,7 +19,7 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
       // home:MyApp(),
-    initialRoute: (loginCred() == "Instance of 'Future<String?>'") ?  '/login' : '/mainPage',
+    initialRoute: (loginCred() == "admin@gmail.com") ?  '/addFlight' : '/mainPage',
     routes: {
         '/loading':(context)=>Loading(),
         '/login': (context)=>Login(),
@@ -30,9 +30,9 @@ Future<void> main() async {
   ));
 }
 
-dynamic loginCred() async{
+Future<String> loginCred() async{
   final storage = new FlutterSecureStorage();
-  dynamic value =  storage.read(key : "username").toString();
+  String value =  storage.read(key : "username").toString();
   print("Username : " + value);
   return value;
 
