@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sdp_project/controllers/auth_controller.dart';
 import 'package:sdp_project/main.dart';
 import 'package:sdp_project/pages/signup.dart';
 import 'package:flutter/gestures.dart';

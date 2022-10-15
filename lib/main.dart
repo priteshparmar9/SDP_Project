@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:sdp_project/controllers/auth_controller.dart';
+import 'package:sdp_project/loadingPage.dart';
+// import 'package:sdp_project/loadingPage.dart';
 import 'package:sdp_project/pages/admin_addFlight.dart';
 import 'package:sdp_project/pages/loading.dart';
 import 'package:sdp_project/pages/login.dart';
@@ -18,22 +19,31 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-      // home:MyApp(),
-    initialRoute: (loginCred() == "admin@gmail.com") ?  '/addFlight' : '/mainPage',
+    // home:MyApp(),
+    initialRoute: '/login',
     routes: {
-        '/loading':(context)=>Loading(),
-        '/login': (context)=>Login(),
-        '/signup': (context)=>SignUp(),
-        '/mainPage': (context)=>MainPage(),
-        '/addFlight': (context)=>AddFlight(),
+      '/loading': (context) => Loading(),
+      '/login': (context) => Login(),
+      '/signup': (context) => SignUp(),
+      '/mainPage': (context) => MainPage(),
+      '/addFlight': (context) => AddFlight(),
     },
   ));
 }
 
-Future<String> loginCred() async{
+Future<String> loginCred() async {
   final storage = new FlutterSecureStorage();
-  String value =  storage.read(key : "username").toString();
+  String value = storage.read(key: "username").toString();
   print("Username : " + value);
   return value;
-
 }
+
+
+
+// void main(){
+//   runApp(
+//     Scaffold(
+//       body: Loading(),
+//     )
+//   );
+// }
