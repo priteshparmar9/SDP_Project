@@ -12,10 +12,9 @@ class BookNow extends StatefulWidget {
   State<BookNow> createState() => _BookNowState();
 }
 
-enum ClassOfFlight {business, economy}
+enum ClassOfFlight { business, economy }
 
 class _BookNowState extends State<BookNow> {
-
   ClassOfFlight _class = ClassOfFlight.business;
   TextEditingController cmpCtl = TextEditingController();
 
@@ -26,7 +25,6 @@ class _BookNowState extends State<BookNow> {
 
   @override
   Widget build(BuildContext context) {
-
     var dropdownItemList = [
       {
         'label': '1',
@@ -57,7 +55,7 @@ class _BookNowState extends State<BookNow> {
     bool? isBusiness = true;
 
     @override
-    void initState(){
+    void initState() {
       super.initState();
       price = int.parse(flight.bus_price);
       final_price = price;
@@ -89,12 +87,11 @@ class _BookNowState extends State<BookNow> {
                             ),
                           ),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(17),
-                              border: Border.all(
-                                width: 3,
-                                color: Colors.blue,
-                              ),
-
+                            borderRadius: BorderRadius.circular(17),
+                            border: Border.all(
+                              width: 3,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                         Text(
@@ -126,7 +123,6 @@ class _BookNowState extends State<BookNow> {
                               width: 3,
                               color: Colors.blue,
                             ),
-
                           ),
                         ),
                         Text(
@@ -138,16 +134,91 @@ class _BookNowState extends State<BookNow> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Date',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(17),
+                                border: Border.all(
+                                  width: 3,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '${flight.dateOfFlight}',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Time',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(17),
+                                border: Border.all(
+                                  width: 3,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '${flight.timeOfFlight}',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                   SizedBox(
-                      height: 70,
-                      child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: ListTile(
-                                  title: const Text('Business Class'),
-                                  leading: Radio(
+                    height: 70,
+                    child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: ListTile(
+                                title: const Text(
+                                  'Business Class',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                leading: Radio(
                                     value: ClassOfFlight.business,
                                     groupValue: _class,
                                     onChanged: (value) {
@@ -155,72 +226,73 @@ class _BookNowState extends State<BookNow> {
                                         isBusiness = true;
                                         _class = ClassOfFlight.business;
                                         price = int.parse(flight.bus_price);
-                                        final_price = price*no_of_people;
+                                        final_price = price * no_of_people;
                                         print(price);
                                       });
                                     }),
-                                ),
                               ),
-                              Expanded(
-                                child: ListTile(
-                                  title: const Text('Economy Class'),
-                                  leading: Radio(
-                                      value: ClassOfFlight.economy,
-                                      groupValue: _class,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isBusiness = false;
-                                          _class = ClassOfFlight.economy;
-                                          price = int.parse(flight.eco_price);
-                                          final_price = price*no_of_people;
-                                          print(price);
-                                        });
-                                      }),
-                                  ),
-                              ),
-                            ],
-                          )
-
-                      ),
-                    ),
-                  Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Price ',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(17),
-                                    border: Border.all(
-                                      width: 3,
-                                      color: Colors.blue,
-                                    ),
-
-                                  ),
-                                ),
-                                Text(
-                                  ' : $price',
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Economy Class',
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),
                                 ),
-                              ],
+                                leading: Radio(
+                                    value: ClassOfFlight.economy,
+                                    groupValue: _class,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isBusiness = false;
+                                        _class = ClassOfFlight.economy;
+                                        price = int.parse(flight.eco_price);
+                                        final_price = price * no_of_people;
+                                        print(price);
+                                      });
+                                    }),
+                              ),
                             ),
+                          ],
+                        )),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Price ',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(17),
+                                  border: Border.all(
+                                    width: 3,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                ' : $price',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
@@ -240,7 +312,7 @@ class _BookNowState extends State<BookNow> {
                           cmpCtl.text = value["label"];
                           setState(() {
                             no_of_people = int.parse(value['value']);
-                            final_price = price*no_of_people;
+                            final_price = price * no_of_people;
                           });
                         },
                         defaultValue: dropdownItemList[0],
@@ -249,6 +321,9 @@ class _BookNowState extends State<BookNow> {
                         // placeholder: 'insert...',
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -270,7 +345,6 @@ class _BookNowState extends State<BookNow> {
                               width: 3,
                               color: Colors.blue,
                             ),
-
                           ),
                         ),
                         Text(
@@ -282,7 +356,22 @@ class _BookNowState extends State<BookNow> {
                       ],
                     ),
                   ),
+                  Container(
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        child: Text(
+                          'Confirm Booking',
+                        )
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(17),
+                      border: Border.all(
+                        width: 3,
+                        color: Colors.blue,
+                      ),
 
+                    ),
+                  )
                 ],
               ),
             ),

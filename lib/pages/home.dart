@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
                       image: AssetImage(
                           'assets/images/' + flight.company + '.png'),
                       height: h * 0.15,
-                      width: w * 0.25,
+                      width: w * 0.30,
                     )
                   ],
                 ),
@@ -83,9 +83,8 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-                              Divider(
-                                thickness: 2,
-                                color: Colors.black,
+                              SizedBox(
+                                height: 8,
                               ),
                               Text(
                                 "Price: ₹" + flight.eco_price,
@@ -94,15 +93,32 @@ class _HomeState extends State<Home> {
                                   fontSize: 20,
                                 ),
                               ),
-                              ElevatedButton(
-                                  onPressed: (){
-                                    ctrl.setFlightId(flight);
-                                    Navigator.pushNamed(context, '/bookNow');
-                                  },
-                                  child: Text(
-                                    'Book Now',
-                                  )
-                              )
+                              SizedBox(
+                                height: 8,
+                              ),
+                              (!ctrl.IsAdmin())?
+                              Container(
+                                child: ElevatedButton(
+                                    onPressed: (){
+                                      ctrl.setFlightId(flight);
+                                      Navigator.pushNamed(context, '/bookNow');
+                                    },
+                                    child: Text(
+                                      'Book Now',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          )
+                                      )
+                                  ),
+                                ),
+                              ):
+                              Text(''),
                             ],
                           ),
                         ],
@@ -124,28 +140,180 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "",
+          "Air Liners",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Container(
-        child: StreamBuilder<List<Flight>>(
-            stream: readFlights(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text(
-                    "Error occured!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
-              } else if (snapshot.hasData) {
-                final flights = snapshot.data;
-                return ListView(
-                  children: flights!.map(buildFlight).toList(),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
+        child:
+        Column(
+          children: [
+            Container(
+              height: h*0.82,
+              child: StreamBuilder<List<Flight>>(
+                  stream: readFlights(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(
+                          "Error occured!!!");
+                    } else if (snapshot.hasData) {
+                      final flights = snapshot.data;
+                      return ListView(
+                        children: flights!.map(buildFlight).toList(),
+                      );
+                    } else {
+                      return Center(child: Image.asset('assets/images/Gif1.gif'));
+                    }
+                  }),
+            ),
+            Container(
+              child: InkWell(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, h * 0.01, 0, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                        ),
+                        child:
+                        ctrl.IsAdmin()?
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  0, h * 0.01, 0, h * 0.01),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Column(children: [
+                              Icon(
+                                Icons.account_circle_rounded,
+                                size: w * 0.09,
+                                color: Colors.black,
+                              ),
+                            ]),
+                            (ctrl.IsLoggedIn() == false) ? Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, "/login");
+                                  },
+                                  child: Icon(
+                                    Icons.login,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ):
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, "/login");
+                                  },
+                                  child: Icon(
+                                    Icons.logout,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, "/addFlight");
+                                  },
+                                  child: Icon(
+                                    Icons.add_box,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ):
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  0, h * 0.01, 0, h * 0.01),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Column(children: [
+                              Icon(
+                                Icons.account_circle_rounded,
+                                size: w * 0.09,
+                                color: Colors.black,
+                              ),
+                            ]),
+                            (ctrl.IsLoggedIn() == false) ? Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+
+                                    Navigator.pushNamed(context, "/login");
+                                  },
+                                  child: Icon(
+                                    Icons.login,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ):
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, "/login");
+                                  },
+                                  child: Icon(
+                                    Icons.logout,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

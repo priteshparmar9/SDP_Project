@@ -391,10 +391,7 @@ class _StateFulAddFlightState extends State<StateFulAddFlight> {
                       print(json);
                       await fbcol.set(json);
 
-                      Navigator.pushNamed(context, '/mainPage');
-
-
-
+                      Navigator.pushNamed(context, '/home');
                     },
 
 

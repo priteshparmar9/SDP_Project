@@ -67,7 +67,6 @@ class _SignUpState extends State<SignUp> {
                 controller: nameController,
                 onChanged: (text) => validateName(nameController.text),
                 decoration: InputDecoration(
-                  errorText: (error_occured)?'':"Error Occured",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),

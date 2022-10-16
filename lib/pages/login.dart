@@ -143,7 +143,7 @@ class StateWidget extends State<MyStatefulWidget>{
                               ctrl.setLogin(email);
                             }
                             print("Login Successful!!");
-                            Navigator.pushNamed(context, '/mainPage');
+                            Navigator.pushNamed(context, '/home');
                           }
                         });
 
