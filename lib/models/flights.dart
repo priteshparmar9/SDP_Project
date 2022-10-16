@@ -37,12 +37,16 @@ class Flight{
     json['timeOfFlight'],
     json['cap_Economy'],
      json['cap_Business'],
-     json['available_Bus'],
-     json['available_Eco'],
     json['company'],
-   json['aircraft'],
-     json['bus_price'],
-     json['eco_price'],
+    json['aircraft'],
+    json['eco_price'],
+    json['bus_price'],
+    json['available_Eco'],
+    json['available_Bus'],
+
+
+
+
   );
 
 

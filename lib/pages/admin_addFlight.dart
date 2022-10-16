@@ -81,7 +81,7 @@ class _StateFulAddFlightState extends State<StateFulAddFlight> {
           key: UniqueKey(), // you have to use UniqueKey()
           height: 40,
           width: 40,
-          child: Image.asset("assets/images/emirates.png"),
+          child: Image.asset("assets/images/Emirates.png"),
         ),
       },
       {'label': 'None of Above', 'value': 'non'},
