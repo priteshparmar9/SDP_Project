@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:sdp_project/Services/controller.dart';
 import 'package:sdp_project/loadingPage.dart';
+import 'package:sdp_project/pages/BookPage.dart';
 import 'package:sdp_project/pages/admin_addFlight.dart';
 import 'package:sdp_project/pages/home.dart';
 import 'package:sdp_project/pages/login.dart';
@@ -20,7 +20,6 @@ Future<void> main() async {
   Controller ctrl = new Controller();
 
 
-  print(loginCred());
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -28,6 +27,7 @@ Future<void> main() async {
     // initialRoute: (ctrl.IsLoggedIn() == true)?'/mainPage':'/login',
     initialRoute: '/home',
     routes: {
+      '/bookNow': (context) => BookNow(),
       '/home': (context) => Home(),
       '/loading': (context) => Loading(),
       '/login': (context) => Login(),
@@ -36,13 +36,6 @@ Future<void> main() async {
       '/addFlight': (context) => AddFlight(),
     },
   ));
-}
-
-Future<String> loginCred() async {
-  final storage = new FlutterSecureStorage();
-  String value = storage.read(key: "username").toString();
-  print("Username : " + value);
-  return value;
 }
 
 
