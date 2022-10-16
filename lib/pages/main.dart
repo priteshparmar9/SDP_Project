@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sdp_project/models/tickets.dart';
+import 'package:sdp_project/Services/controller.dart';
+import 'package:sdp_project/Services/flightService.dart';
+import 'package:sdp_project/models/flights.dart';
 
 class MainPage extends StatefulWidget {
   // const MainPage({Key? key}) : super(key: key);
@@ -11,16 +13,46 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Ticket> t = [
-    Ticket("Rajkot", "Mumbai", DateTime.parse("2022-10-11"), 2.5, 125, 125,
-        "Air India", "AI | 656", "Available", 5500),
-    Ticket("Rajkot", "Goa", DateTime.parse("2022-10-12"), 2.5, 125, 125,
-        "Air India", "AI | 646", "Available", 3500),
-    Ticket("Delhi", "Chennai", DateTime.parse("2022-10-11"), 2.5, 125, 125,
-        "Vistara", "VS | 654", "Available", 5500),
+
+  List<Flight> t = [
+    Flight('Va', 'Mumbai', '19/09/2022' ,'10:30', '20', '20', 'Air India', 'AIR 1023', '2000', '3000', '20', '20'),
+    Flight('Va', 'Mumbai', '19/09/2022' ,'10:30', '20', '20', 'Air India', 'AIR 1023', '2000', '3000', '20', '20'),
+    Flight('Va', 'Mumbai', '19/09/2022' ,'10:30', '20', '20', 'Air India', 'AIR 1023', '2000', '3000', '20', '20'),
   ];
 
-  Widget ticketTemplate(ticket, w, h) {
+  List<dynamic> flights = [];
+
+  @override
+  void initState(){
+    super.initState();
+    fetchFlights();
+    // print(flights);
+  }
+
+  fetchFlights() async {
+    List<dynamic> result = [];
+    try{
+      result = await getFlights();
+    }
+    catch(Exception){
+      print("Error Occured!!!!!!");
+    }
+
+    if (result.isEmpty) {
+      print("Unable to fetch data");
+    }
+    else {
+      setState() {
+        flights = result;
+        print(flights);
+      }
+    }
+    print("Fetch flights called!!!");
+  }
+
+
+  Widget HomeTemplate(ticket, w, h) {
+    print("Card called once");
     return Card(
       margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
       shape: RoundedRectangleBorder(
@@ -36,7 +68,7 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   Image(
                     image:
-                        AssetImage('assets/images/' + ticket.company + '.png'),
+                    AssetImage('assets/images/' + ticket.company + '.png'),
                     height: h * 0.15,
                     width: w * 0.25,
                   )
@@ -78,10 +110,11 @@ class _MainPageState extends State<MainPage> {
                     color: Colors.black,
                   ),
                   Text(
-                      "Price: ₹"+ ticket.base_price.toString(),
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                    "Price: ₹"+ ticket.eco_price,
+                    // "Nothing",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   )
                 ],
               ),
@@ -92,10 +125,21 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    Controller ctrl = new Controller();
+    print("Here");
+    // fetchFlights();
+    final CollectionReference _flights = FirebaseFirestore.instance.collection('flights');
+
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Flight tickets'),
@@ -104,8 +148,17 @@ class _MainPageState extends State<MainPage> {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: t.map((e) => ticketTemplate(e, w, h)).toList(),
+            children: flights.map((e) => HomeTemplate(e, w, h)).toList()
+
+              // [Text('Nothing to print'),]
+            // (flights.isEmpty() == false) ?
+
+                  // Text('No Flights available'),
           ),
+          // StreamBuilder(
+          //     stream: _flights.snapshots(),
+          //     builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot),
+          // ),
           Spacer(),
           Column(
             children: [
@@ -120,7 +173,10 @@ class _MainPageState extends State<MainPage> {
                           decoration: BoxDecoration(
                             color: Color.fromRGBO(255, 255, 255, 1),
                           ),
-                          child: Row(
+                          child:
+                              ctrl.IsAdmin()?
+
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -144,6 +200,20 @@ class _MainPageState extends State<MainPage> {
                                   color: Colors.black,
                                 ),
                               ]),
+                              (ctrl.IsLoggedIn() == false) ? Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, "/login");
+                                    },
+                                    child: Icon(
+                                      Icons.login,
+                                      size: w * 0.09,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
+                              ):
                               Column(
                                 children: [
                                   GestureDetector(
@@ -151,7 +221,7 @@ class _MainPageState extends State<MainPage> {
                                       Navigator.pushNamed(context, "/login");
                                     },
                                     child: Icon(
-                                      Icons.add_chart,
+                                      Icons.logout,
                                       size: w * 0.09,
                                       color: Colors.black,
                                     ),
@@ -173,7 +243,62 @@ class _MainPageState extends State<MainPage> {
                                 ],
                               )
                             ],
-                          ),
+                          ):
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        0, h * 0.01, 0, h * 0.01),
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          Icons.search,
+                                          size: w * 0.09,
+                                          color: Colors.black,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(children: [
+                                    Icon(
+                                      Icons.account_circle_rounded,
+                                      size: w * 0.09,
+                                      color: Colors.black,
+                                    ),
+                                  ]),
+                                  (ctrl.IsLoggedIn() == false) ? Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+
+                                          Navigator.pushNamed(context, "/login");
+                                        },
+                                        child: Icon(
+                                          Icons.login,
+                                          size: w * 0.09,
+                                          color: Colors.black,
+                                        ),
+                                      )
+                                    ],
+                                  ):
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(context, "/login");
+                                        },
+                                        child: Icon(
+                                          Icons.logout,
+                                          size: w * 0.09,
+                                          color: Colors.black,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                         ),
                       ],
                     ),

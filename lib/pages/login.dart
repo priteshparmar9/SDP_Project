@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sdp_project/Services/controller.dart';
 import 'package:sdp_project/main.dart';
+import 'package:sdp_project/pages/loading.dart';
 import 'package:sdp_project/pages/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,6 @@ import 'package:flutter/material.dart';
 
 
 class Login extends StatelessWidget {
-
 
   Widget build(BuildContext context){
     return Scaffold(
@@ -31,6 +32,7 @@ class MyStatefulWidget extends StatefulWidget{
 
 class StateWidget extends State<MyStatefulWidget>{
 
+  Controller ctrl = new Controller();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -138,22 +140,24 @@ class StateWidget extends State<MyStatefulWidget>{
                           if((doc["email"] == email || doc["username"] == email)&& doc["password"] == password){
                             if(!flag){
                               flag = true;
-                              setUsername(email);
+                              ctrl.setLogin(email);
                             }
                             print("Login Successful!!");
-                            Navigator.pushNamed(context, "/loading");
+                            Navigator.pushNamed(context, '/mainPage');
                           }
                         });
 
                       });
-
-                      Navigator.pushNamed(context, "/mainPage");
                     }
                     catch(Exception){
                       AlertDialog(
                         title: Text('Invalid Credentials'),
                       );
                     }
+                    AlertDialog(
+                      title: Text('Invalid Credentials'),
+                    );
+                    print("Invalid credentials");
 
                     // Navigator.pushNamed(context, "/signup");
                   },
@@ -211,21 +215,4 @@ class StateWidget extends State<MyStatefulWidget>{
       ),
     );
   }
-}
-
-void loginCred() async{
-  final storage = new FlutterSecureStorage();
-  dynamic value = await storage.read(key : "username");
-  print(value);
-}
-
-void setUsername(String username) async{
-  print("Username is set!!!");
-
-  final storage = new FlutterSecureStorage();
-  await storage.write(key: "username", value: username);
-
-
-  loginCred();
-  return;
 }

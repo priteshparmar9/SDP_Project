@@ -30,4 +30,23 @@ class Flight{
     'eco_price': eco_price,
   };
 
+  static Flight fromJson(Map<String, dynamic> json) => Flight (
+      json['source'],
+     json['destination'],
+    json['dateOfFlight'],
+    json['timeOfFlight'],
+    json['cap_Economy'],
+     json['cap_Business'],
+     json['available_Bus'],
+     json['available_Eco'],
+    json['company'],
+   json['aircraft'],
+     json['bus_price'],
+     json['eco_price'],
+  );
+
+
+
+
+
 }
