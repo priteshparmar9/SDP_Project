@@ -11,6 +11,11 @@ class Controller extends GetxController {
     box.write('isLoggedIn', true);
     box.write('email', email);
   }
+
+  String getLogin(){
+    return box.read('email');
+  }
+
   bool IsAdmin(){
     return (box.read('email') == 'admin');
   }

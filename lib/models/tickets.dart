@@ -1,30 +1,38 @@
+import 'package:sdp_project/models/tickets.dart';
+
 class Ticket{
+  final String username;
   final String source;
   final String destination;
-  final DateTime dateandtime;
-  final double duration;
-  final int capacity;
-  final int available;
+  final String dateandtime;
   final String company;
   final String aircraft;
-  final String status;
-  final int base_price;
+  final int people;
+  final bool economy;
 
-  Ticket(this.source, this.destination, this.dateandtime, this.duration,this.capacity,
-      this.available ,this.company, this.aircraft, this.status, this.base_price);
+  Ticket(this.username,this.source, this.destination, this.dateandtime,this.aircraft,
+      this.people ,this.company, this.economy);
 
   Map<String, dynamic> toJson()=>{
+    'username': username,
     'source': source,
     'destination': destination,
     'dateandtime': dateandtime,
-    'duration': duration,
-    'capacity': capacity,
-    'available' : available,
-    'company': company,
     'aircraft': aircraft,
-    'base_price': base_price,
-    'status': status,
+    'people': people,
+    'company': company,
+    'economy': economy,
   };
 
+  static Ticket fromJson(Map<String, dynamic> json) => Ticket (
+    json['usernmae'],
+    json['source'],
+    json['destination'],
+    json['dateandtime'],
+    json['aircraft'],
+    json['people'],
+    json['company'],
+    json['economy'],
+  );
 
 }

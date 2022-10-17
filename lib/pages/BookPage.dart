@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:sdp_project/Services/controller.dart';
 import 'package:sdp_project/models/flights.dart';
+import 'package:sdp_project/models/tickets.dart';
 
 class BookNow extends StatefulWidget {
   // const BookNow({Key? key}) : super(key: key);
@@ -15,8 +18,10 @@ class BookNow extends StatefulWidget {
 enum ClassOfFlight { business, economy }
 
 class _BookNowState extends State<BookNow> {
-  ClassOfFlight _class = ClassOfFlight.business;
+
   TextEditingController cmpCtl = TextEditingController();
+
+  ClassOfFlight _class = ClassOfFlight.business;
 
   Controller ctrl = new Controller();
   num price = 0;
@@ -250,7 +255,8 @@ class _BookNowState extends State<BookNow> {
                                         final_price = price * no_of_people;
                                         print(price);
                                       });
-                                    }),
+                                    }
+                                    ),
                               ),
                             ),
                           ],
@@ -356,25 +362,56 @@ class _BookNowState extends State<BookNow> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 50,
+                  ),
                   Container(
                     child: ElevatedButton(
-                        onPressed: (){},
-                        child: Text(
-                          'Confirm Booking',
+                        onPressed: (){
+                          Controller ctrl = new Controller();
+                          bool economy = (_class == 'business')?true:false;
+                          int people = int.parse(cmpCtl.text);
+
+
+                          Ticket t = new Ticket(ctrl.getLogin(),flight.source, flight.destination, flight.dateOfFlight, flight.aircraft, people, flight.company, economy);
+
+                          bookTicket(t);
+
+                          Navigator.pushNamed(context, '/home');
+                        },
+                        child:
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Confirm Booking',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                )
+                            )
                         )
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(17),
-                      border: Border.all(
-                        width: 3,
-                        color: Colors.blue,
-                      ),
 
                     ),
+
                   )
                 ],
               ),
             ),
     );
   }
+}
+
+
+Future bookTicket(ticket) async{
+  final fbcol = FirebaseFirestore.instance.collection("tickets").doc();
+
+  final json = ticket.toJson();
+  await fbcol.set(json);
+
 }
