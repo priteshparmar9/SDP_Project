@@ -38,12 +38,17 @@ class _UserHistoryState extends State<UserHistory> {
                 stream: _tickets.snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if (streamSnapshot.hasData) {
-                    return ListView.builder(
+
+                    return
+                      ListView.builder(
                         itemCount: streamSnapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           final DocumentSnapshot documentSnapshot =
                           streamSnapshot.data!.docs[index];
-                          return Card(
+
+                          return
+                            // (documentSnapshot['username']==ctrl.getLogin())?
+                            Card(
                               margin: const EdgeInsets.all(10),
                               color: Color.fromRGBO(202, 240, 248, 1),
                               child:Card(
@@ -80,7 +85,7 @@ class _UserHistoryState extends State<UserHistory> {
                                                     documentSnapshot['source'],
                                                     style: TextStyle(
                                                       color: Colors.blue,
-                                                      fontSize: 30,
+                                                      fontSize: 20,
                                                     ),
                                                   ),
                                                   Icon(
@@ -92,14 +97,14 @@ class _UserHistoryState extends State<UserHistory> {
                                                     documentSnapshot['destination'],
                                                     style: TextStyle(
                                                       color: Colors.blue,
-                                                      fontSize: 30,
+                                                      fontSize: 20,
                                                     ),
                                                   ),
                                                   Text(
                                                     documentSnapshot['dateandtime'],
                                                     style: TextStyle(
                                                       color: Colors.blue,
-                                                      fontSize: 30,
+                                                      fontSize: 20,
                                                     ),
                                                   ),
                                                   Row(
@@ -108,17 +113,30 @@ class _UserHistoryState extends State<UserHistory> {
                                                         'No of People : ',
                                                         style: TextStyle(
                                                           color: Colors.blue,
-                                                          fontSize: 30,
+                                                          fontSize: 20,
                                                         ),
                                                       ),
                                                       Text(
                                                         documentSnapshot['people'].toString(),
                                                         style: TextStyle(
                                                           color: Colors.blue,
-                                                          fontSize: 30,
+                                                          fontSize: 20,
                                                         ),
                                                       ),
                                                     ],
+                                                  ),
+                                                  Text(
+                                                    'Username : ',
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),Text(
+                                                      documentSnapshot['username'].toString(),
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 20,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -135,9 +153,13 @@ class _UserHistoryState extends State<UserHistory> {
                                 ),
                               )
                           );
+                          // :Text(
+                          //       ''
+                          //   );
+
                         });
                   } else {
-                    return Image.asset('/asset/images/Gif1.gif');
+                    return Image.asset('asset/images/Gif1.gif');
                   }
                 },
               ),

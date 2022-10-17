@@ -87,7 +87,17 @@ class _HomeState extends State<Home> {
                                 height: 8,
                               ),
                               Text(
-                                "Price: ₹" + flight.eco_price,
+                                "Economy Price: ₹" + flight.eco_price,
+                                // "Nothing",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "Business Price: ₹" + flight.bus_price,
                                 // "Nothing",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -273,13 +283,20 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                             ),
-                            Column(children: [
-                              Icon(
-                                Icons.account_circle_rounded,
-                                size: w * 0.09,
-                                color: Colors.black,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, '/history');
+                              },
+                              child: Column(
+                                children: [
+                                Icon(
+                                  Icons.account_circle_rounded,
+                                  size: w * 0.09,
+                                  color: Colors.black,
+                                ),
+                              ],
                               ),
-                            ]),
+                            ),
                             (ctrl.IsLoggedIn() == false) ? Column(
                               children: [
                                 GestureDetector(

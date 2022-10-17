@@ -178,7 +178,7 @@ class StateWidget extends State<MyStatefulWidget>{
                       }
                     }
 
-                    var future = new Future.delayed(const Duration(milliseconds: 500), doStuffCallback);
+                    var future = new Future.delayed(const Duration(milliseconds: 1000), doStuffCallback);
 
 
                     // Navigator.pushNamed(context, "/signup");
@@ -206,7 +206,6 @@ class StateWidget extends State<MyStatefulWidget>{
                 Center(
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.pushNamed(context, '/mainPage');
                       Navigator.pushNamed(context, '/signup');
                     },
                     child: RichText(
