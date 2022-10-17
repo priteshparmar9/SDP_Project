@@ -140,176 +140,179 @@ class _MainPageState extends State<MainPage> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Flight tickets'),
-      ),
-      body: Column(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: flights.map((e) => HomeTemplate(e, w, h)).toList()
+    return 
+      SingleChildScrollView(
+        child: Scaffold(
+        appBar: AppBar(
+          title: Text('Flight tickets'),
+        ),
+        body: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: flights.map((e) => HomeTemplate(e, w, h)).toList()
 
-              // [Text('Nothing to print'),]
-            // (flights.isEmpty() == false) ?
+                // [Text('Nothing to print'),]
+              // (flights.isEmpty() == false) ?
 
-                  // Text('No Flights available'),
-          ),
-          // StreamBuilder(
-          //     stream: _flights.snapshots(),
-          //     builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot),
-          // ),
-          Spacer(),
-          Column(
-            children: [
-              Container(
-                child: InkWell(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, h * 0.01, 0, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 255, 255, 1),
-                          ),
-                          child:
-                              ctrl.IsAdmin()?
+                    // Text('No Flights available'),
+            ),
+            // StreamBuilder(
+            //     stream: _flights.snapshots(),
+            //     builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot),
+            // ),
+            Spacer(),
+            Column(
+              children: [
+                Container(
+                  child: InkWell(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, h * 0.01, 0, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(255, 255, 255, 1),
+                            ),
+                            child:
+                                ctrl.IsAdmin()?
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    0, h * 0.01, 0, h * 0.01),
-                                child: Column(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      0, h * 0.01, 0, h * 0.01),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.search,
+                                        size: w * 0.09,
+                                        color: Colors.black,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(children: [
+                                  Icon(
+                                    Icons.account_circle_rounded,
+                                    size: w * 0.09,
+                                    color: Colors.black,
+                                  ),
+                                ]),
+                                (ctrl.IsLoggedIn() == false) ? Column(
                                   children: [
-                                    Icon(
-                                      Icons.search,
-                                      size: w * 0.09,
-                                      color: Colors.black,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, "/login");
+                                      },
+                                      child: Icon(
+                                        Icons.login,
+                                        size: w * 0.09,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  ],
+                                ):
+                                Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, "/login");
+                                      },
+                                      child: Icon(
+                                        Icons.logout,
+                                        size: w * 0.09,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, "/addFlight");
+                                      },
+                                      child: Icon(
+                                        Icons.add_box,
+                                        size: w * 0.09,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ):
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          0, h * 0.01, 0, h * 0.01),
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.search,
+                                            size: w * 0.09,
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Column(children: [
+                                      Icon(
+                                        Icons.account_circle_rounded,
+                                        size: w * 0.09,
+                                        color: Colors.black,
+                                      ),
+                                    ]),
+                                    (ctrl.IsLoggedIn() == false) ? Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+
+                                            Navigator.pushNamed(context, "/login");
+                                          },
+                                          child: Icon(
+                                            Icons.login,
+                                            size: w * 0.09,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
+                                    ):
+                                    Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(context, "/login");
+                                          },
+                                          child: Icon(
+                                            Icons.logout,
+                                            size: w * 0.09,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ),
-                              Column(children: [
-                                Icon(
-                                  Icons.account_circle_rounded,
-                                  size: w * 0.09,
-                                  color: Colors.black,
-                                ),
-                              ]),
-                              (ctrl.IsLoggedIn() == false) ? Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, "/login");
-                                    },
-                                    child: Icon(
-                                      Icons.login,
-                                      size: w * 0.09,
-                                      color: Colors.black,
-                                    ),
-                                  )
-                                ],
-                              ):
-                              Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, "/login");
-                                    },
-                                    child: Icon(
-                                      Icons.logout,
-                                      size: w * 0.09,
-                                      color: Colors.black,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, "/addFlight");
-                                    },
-                                    child: Icon(
-                                      Icons.add_box,
-                                      size: w * 0.09,
-                                      color: Colors.black,
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ):
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        0, h * 0.01, 0, h * 0.01),
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.search,
-                                          size: w * 0.09,
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Column(children: [
-                                    Icon(
-                                      Icons.account_circle_rounded,
-                                      size: w * 0.09,
-                                      color: Colors.black,
-                                    ),
-                                  ]),
-                                  (ctrl.IsLoggedIn() == false) ? Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-
-                                          Navigator.pushNamed(context, "/login");
-                                        },
-                                        child: Icon(
-                                          Icons.login,
-                                          size: w * 0.09,
-                                          color: Colors.black,
-                                        ),
-                                      )
-                                    ],
-                                  ):
-                                  Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pushNamed(context, "/login");
-                                        },
-                                        child: Icon(
-                                          Icons.logout,
-                                          size: w * 0.09,
-                                          color: Colors.black,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      // bottomNavigationBar:
-    );
+              ],
+            ),
+          ],
+        ),
+        // bottomNavigationBar:
+    ),
+      );
   }
 }

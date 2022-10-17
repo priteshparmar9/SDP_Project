@@ -25,8 +25,8 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     // home:MyApp(),
-    // initialRoute: (ctrl.IsLoggedIn() == true)?'/home':'/login',
-    initialRoute: '/history',
+    initialRoute: (ctrl.IsLoggedIn() == true)?'/home':'/login',
+    // initialRoute: '/history',
     routes: {
       '/history': (context) => UserHistory(),
       '/bookNow': (context) => BookNow(),

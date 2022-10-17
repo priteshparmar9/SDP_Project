@@ -1,141 +1,146 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sdp_project/Services/controller.dart';
-import 'package:sdp_project/models/tickets.dart';
+
 
 class UserHistory extends StatefulWidget {
-  // const UserHistory({Key? key}) : super(key: key);
+  // const Users({Key? key}) : super(key: key);
 
   @override
   State<UserHistory> createState() => _UserHistoryState();
 }
 
 class _UserHistoryState extends State<UserHistory> {
-
   Controller ctrl = new Controller();
+  double w = 0, h = 0;
+  final CollectionReference _tickets =
+  FirebaseFirestore.instance.collection('tickets');
 
-
-  Widget buildTicket(Ticket ticket) => Card(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      color: Color.fromRGBO(202, 240, 248, 1),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-        child: IntrinsicHeight(
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Image(
-                    image: AssetImage(
-                        'assets/images/' + ticket.company + '.png'),
-                    height: h * 0.15,
-                    width: w * 0.30,
-                  )
-                ],
-              ),
-              VerticalDivider(
-                thickness: 2,
-                color: Colors.blueAccent,
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IntrinsicHeight(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    ticket.source,
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.keyboard_double_arrow_down_sharp,
-                                    size: 35,
-                                    // color: Color.fromRGBO(0, 200, , 1),
-                                  ),
-                                  Text(
-                                    ticket.destination,
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      )
-  );
-
-  Stream<List<Ticket>> readTickets() => FirebaseFirestore.instance
-      .collection('tickets')
-      .snapshots()
-      .map((snapshot) =>
-      snapshot.docs.map((doc) => Ticket.fromJson(doc.data())).toList());
-
-
-
-
-  num w = 0, h = 0;
   @override
   Widget build(BuildContext context) {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Air Liners",
+          'History',
           style: TextStyle(
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Container(
-        child:
-        Column(
+        child: Column(
           children: [
             Container(
               height: h*0.82,
-              child: StreamBuilder<List<Ticket>>(
-                  stream: readTickets(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final tickets = snapshot.data;
-                      return ListView(
-                        children: tickets!.map(buildTicket).toList(),
-                      );
-                    } else {
-                      return Center(child: Image.asset('assets/images/Gif1.gif'));
-                    }
-                  }),
+              child: StreamBuilder(
+                stream: _tickets.snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if (streamSnapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          final DocumentSnapshot documentSnapshot =
+                          streamSnapshot.data!.docs[index];
+                          return Card(
+                              margin: const EdgeInsets.all(10),
+                              color: Color.fromRGBO(202, 240, 248, 1),
+                              child:Card(
+                                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                color: Color.fromRGBO(202, 240, 248, 1),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  child: IntrinsicHeight(
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Image(
+                                              image:
+                                              AssetImage('assets/images/' + documentSnapshot['company'] + '.png'),
+                                              height: h * 0.15,
+                                              width: w * 0.25,
+                                            )
+                                          ],
+                                        ),
+                                        VerticalDivider(
+                                          thickness: 2,
+                                          color: Colors.blueAccent,
+                                        ),
+                                        Column(
+                                          children: [
+                                            IntrinsicHeight(
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    documentSnapshot['source'],
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 30,
+                                                    ),
+                                                  ),
+                                                  Icon(
+                                                    Icons.keyboard_double_arrow_down_sharp,
+                                                    size: 40,
+                                                    // color: Colors,
+                                                  ),
+                                                  Text(
+                                                    documentSnapshot['destination'],
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 30,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    documentSnapshot['dateandtime'],
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 30,
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'No of People : ',
+                                                        style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontSize: 30,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        documentSnapshot['people'].toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontSize: 30,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Divider(
+                                              thickness: 2,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                          );
+                        });
+                  } else {
+                    return Image.asset('/asset/images/Gif1.gif');
+                  }
+                },
+              ),
             ),
             Container(
               child: InkWell(
@@ -169,12 +174,16 @@ class _UserHistoryState extends State<UserHistory> {
                               ),
                             ),
                             Column(children: [
-                              Icon(
-                                Icons.account_circle_rounded,
-                                size: w * 0.09,
+                              Container(
+                                child: Icon(
+                                  Icons.account_circle_rounded,
+                                  size: w * 0.09,
+                                  color: Colors.white,
+                                ),
                                 color: Colors.black,
                               ),
-                            ]),
+                            ],
+                            ),
                             (ctrl.IsLoggedIn() == false) ? Column(
                               children: [
                                 GestureDetector(
@@ -237,9 +246,12 @@ class _UserHistoryState extends State<UserHistory> {
                               ),
                             ),
                             Column(children: [
-                              Icon(
-                                Icons.account_circle_rounded,
-                                size: w * 0.09,
+                              Container(
+                                child: Icon(
+                                  Icons.account_circle_rounded,
+                                  size: w * 0.09,
+                                  color: Colors.white,
+                                ),
                                 color: Colors.black,
                               ),
                             ]),

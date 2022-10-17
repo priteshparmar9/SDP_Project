@@ -200,13 +200,18 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                             ),
-                            Column(children: [
-                              Icon(
-                                Icons.account_circle_rounded,
-                                size: w * 0.09,
-                                color: Colors.black,
-                              ),
-                            ]),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, '/history');
+                              },
+                              child: Column(children: [
+                                Icon(
+                                  Icons.account_circle_rounded,
+                                  size: w * 0.09,
+                                  color: Colors.black,
+                                ),
+                              ]),
+                            ),
                             (ctrl.IsLoggedIn() == false) ? Column(
                               children: [
                                 GestureDetector(

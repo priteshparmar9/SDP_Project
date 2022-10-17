@@ -7,8 +7,8 @@ class Ticket{
   final String dateandtime;
   final String company;
   final String aircraft;
-  final int people;
-  final bool economy;
+  final String people;
+  final String economy;
 
   Ticket(this.username,this.source, this.destination, this.dateandtime,this.aircraft,
       this.people ,this.company, this.economy);
