@@ -40,7 +40,7 @@ dependencies:
   cool_dropdown: ^1.4.2
   intl: any
   get_storage: ^2.0.3
-
+  rflutter_alert: ^2.0.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

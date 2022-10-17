@@ -22,6 +22,7 @@ class Controller extends GetxController {
 
   void logout(){
     box.erase();
+    print(box.read('email'));
     return;
   }
 

@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sdp_project/Services/controller.dart';
-import 'package:sdp_project/main.dart';
-import 'package:sdp_project/pages/loading.dart';
-import 'package:sdp_project/pages/signup.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 
@@ -38,6 +34,9 @@ class StateWidget extends State<MyStatefulWidget>{
   TextEditingController passwordController = TextEditingController();
 
   Widget build(BuildContext context){
+
+    ctrl.logout();
+
     double w = MediaQuery.of(context).size.width;
     double h =  MediaQuery.of(context).size.height;
     return Scaffold(
@@ -154,10 +153,33 @@ class StateWidget extends State<MyStatefulWidget>{
                         title: Text('Invalid Credentials'),
                       );
                     }
-                    AlertDialog(
-                      title: Text('Invalid Credentials'),
-                    );
-                    print("Invalid credentials");
+
+
+                    doStuffCallback(){
+                      if (!flag) {
+                        Alert(
+                          context: context,
+                          image: Image.asset('assets/images/error.png'),
+                          title: "Invalid Credentials",
+                          desc:
+                          "Username/email and Password you have entered are not valid!!",
+                          buttons: [
+                            DialogButton(
+                              child: Text(
+                                "Try Again",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              width: 120,
+                            )
+                          ],
+                        ).show();
+                      }
+                    }
+
+                    var future = new Future.delayed(const Duration(milliseconds: 500), doStuffCallback);
+
 
                     // Navigator.pushNamed(context, "/signup");
                   },
