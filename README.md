@@ -1,4 +1,4 @@
-# sdp_project
+# Flight Ticket Booking App Flutter
 
 A new Flutter project.
 
